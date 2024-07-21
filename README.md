@@ -77,3 +77,4 @@ POST (загрузка файла), в теле запроса передаем/
 "content": "XHg2NjY5NmM2NTM1MGQwYQ=="
 }
 ]`
+- POSTMAN https://elements.getpostman.com/redirect?entityId=31131036-8f912e1b-9e4f-4089-ab69-a0b85d778eb0&entityType=collection
