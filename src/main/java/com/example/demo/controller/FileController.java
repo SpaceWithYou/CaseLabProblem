@@ -32,7 +32,7 @@ public class FileController {
     /** Получить файл по id*/
     @GetMapping("/file/{id}")
     public FileEntity getFile(@PathVariable UUID id) {
-        return repo.findById(id).get();
+        return repo.findById(id).orElse(null);
     }
 
     /**Получить все файлы по странично с сортировкой по дате создания*/
@@ -40,6 +40,7 @@ public class FileController {
     public Iterable<FileEntity> getFiles(@RequestParam(defaultValue = "true") boolean isAscending,
                                      @RequestParam(defaultValue = "0") int pageNumber,
                                      @RequestParam(defaultValue = "5") int pageSize) {
+        if(pageNumber < 0 || pageSize <= 0) return null;
         Pageable paging;
         if(isAscending) {
             paging = PageRequest.of(pageNumber, pageSize, Sort.by("creationDate").ascending());

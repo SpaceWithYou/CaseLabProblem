@@ -80,4 +80,5 @@ public class APITests {
         assert Arrays.equals(Base64.decode(file2.getContent()),
                 loadTestFile(resource.getFile()));
     }
+
 }
