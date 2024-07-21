@@ -1,0 +1,46 @@
+services:
+  #Database container
+  postgres:
+    image: 'postgres:latest'
+    restart: always
+    #Настройка бд
+    environment:
+      - 'POSTGRES_DB=filedatabase'
+      - 'POSTGRES_PASSWORD=123'
+      - 'POSTGRES_USER=postgres'
+    ports:
+      - '5432:5432'
+    #Том для хранения данных
+    volumes:
+      - data:/var/lib/postgresql/data
+    #Общая сеть
+    networks:
+      - net
+  #Application container
+  spring:
+    restart: always
+    #Сборка с помощью докер-файла
+    build:
+      context: .
+      dockerfile: Dockerfile
+    #Ждем запуск бд
+    depends_on:
+      - postgres
+    #Общая сеть
+    networks:
+      - net
+    ports:
+      - '80:80'
+#Общая сеть для общения контейнеров
+networks:
+  net:
+    driver: bridge
+#Том для хранения данных
+volumes:
+  data:
+    driver: local
+    #Монтируем папку ./DockerData
+    driver_opts:
+      o: bind
+      type: none
+      device: ./DockerData
